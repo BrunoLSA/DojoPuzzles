@@ -19,7 +19,7 @@ def seq(number):
 
 def discover():
     l2 = []
-    for i in range(1, 1000000):
+    for i in range(1, 1000001):
         l2.append(seq(i))
     return l2.index(max(l2)) + 1
 
