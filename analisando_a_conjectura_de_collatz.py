@@ -8,26 +8,40 @@ Podemos ver que esta seqüência (iniciando em 13 e terminando em 1) contém 10 
 Desenvolva um programa que descubra qual o número inicial entre 1 e 1 milhão que produz a maior seqüência.
 """
 
-def seq(number):
-    l = [number]
-    while l[-1] != 1:
-        if l[-1]%2 == 0:
-            l.append(l[-1]//2)
-        else:
-            l.append(3*l[-1] + 1)
-    return len(l)
 
-def discover():
-    l2 = []
-    for i in range(1, 1000001):
-        l2.append(seq(i))
-    return l2.index(max(l2)) + 1
+def next_(n):
+    '''Return the next number for the sequence.'''
+    return (3 * n + 1) if n % 2 else (n // 2)
 
 
+def seq(n):
+    '''Generator to produce a complete sequence from n.'''
+    yield n
 
-#Testes:
-assert seq(4) == 3
-assert seq(5) == 6
-assert seq(13) == 10
+    while n > 1:
+        n = next_(n)
+        yield n
 
-print(discover())
+
+def count(iterable):
+    '''Return how many elements has an iterable.'''
+    return sum(1 for _ in iterable)
+
+
+def max_length(start=1, stop=1000001):
+    '''Returns the number and length of the longest sequence.'''
+    length, number = max((count(seq(n)), n) for n in range(start, stop))
+    return number, length
+
+
+# Tests
+assert next_(1) == 4
+assert next_(2) == 1
+assert next_(13) == 40
+
+assert list(seq(13)) == [13, 40, 20, 10, 5, 16, 8, 4, 2, 1]
+assert count(seq(13)) == 10
+
+assert max_length(1, 14) == (9, 20)  # number 9, length 20
+
+print(max_length(start=1, stop=1000001))
