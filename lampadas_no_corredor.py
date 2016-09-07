@@ -19,8 +19,8 @@ Saída: [on, off, off]
 
 def lampada(n):
     status = (n+1)*["off"]
-    for i in range(1, n):
-        for a in range(1, n):
+    for i in range(1, n+1):
+        for a in range(1, n+1):
             if a % i == 0 and status[a] == "on":
                 status[a] = "off"
             elif a % i == 0 and status[a] == "off":
@@ -35,3 +35,4 @@ def lampada(n):
 assert lampada(3) == ["on", "off", "off"]
 assert lampada(2) == ["on", "off"]
 assert lampada(4) == ["on", "off", "off", "on"]
+assert lampada(5) == ["on", "off", "off", "on", "off"]
